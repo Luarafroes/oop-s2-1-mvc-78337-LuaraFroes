@@ -3,9 +3,9 @@ namespace Library.Tests
     public class UnitTest1
     {
         [Fact]
-        public void ThisTestshouldFail()
+        public void ThisTestshouldPass()
         {
-            string name = "John";
+            string name = "Luara";
             Assert.Equal("Luara", name);
         }
 
