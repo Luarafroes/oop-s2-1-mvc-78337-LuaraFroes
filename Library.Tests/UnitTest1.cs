@@ -1,5 +1,6 @@
 using Library.Domain;
 using Library.MVC;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Library.Tests
 {
@@ -122,6 +123,37 @@ namespace Library.Tests
             var expectedRole = "Admin";
             // Assert
             Assert.Equal(expectedRole, adminRole);
+        }
+    }
+    public class SeedDataTests
+    {
+        [Fact]
+        public void AppRoles_Should_Have_Admin_And_Member()
+        {
+            // Arrange
+            var adminRole = AppRoles.Admin;
+            var memberRole = AppRoles.Member;
+            // Act
+            var expectedAdminRole = "Admin";
+            var expectedMemberRole = "Member";
+            // Assert
+            Assert.Equal(expectedAdminRole, adminRole);
+            Assert.Equal(expectedMemberRole, memberRole);
+        }
+    }
+    public class AccessControlTests
+    {
+        [Fact]
+        public void RolesController_Should_Have_Admin_Authorization()
+        {
+            // Arrange
+            var controllerType = typeof(RolesController);
+            // Act
+            var authorizeAttribute = controllerType.GetCustomAttributes(typeof(AuthorizeAttribute), true)
+                .FirstOrDefault() as AuthorizeAttribute;
+            // Assert
+            Assert.NotNull(authorizeAttribute);
+            Assert.Equal(AppRoles.Admin, authorizeAttribute.Roles);
         }
     }
 }
