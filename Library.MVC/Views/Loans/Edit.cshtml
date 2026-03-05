@@ -1,49 +1,54 @@
-﻿@model Library.Domain.Loan
+﻿@model IEnumerable<Library.Domain.Loan>
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Loans";
 }
 
-<h1>Edit</h1>
+<h1>Loans</h1>
 
-<h4>Loan</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="BookId" class="control-label"></label>
-                <select asp-for="BookId" class="form-control" asp-items="ViewBag.BookId"></select>
-                <span asp-validation-for="BookId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MemberId" class="control-label"></label>
-                <select asp-for="MemberId" class="form-control" asp-items="ViewBag.MemberId"></select>
-                <span asp-validation-for="MemberId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LoanDate" class="control-label"></label>
-                <input asp-for="LoanDate" class="form-control" />
-                <span asp-validation-for="LoanDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DueDate" class="control-label"></label>
-                <input asp-for="DueDate" class="form-control" />
-                <span asp-validation-for="DueDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Loan</a>
+</p>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Book</th>
+            <th>Member</th>
+            <th>Loan Date</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Book?.Title</td>
+                <td>@item.Member?.Name</td>
+                <td>@item.LoanDate.ToShortDateString()</td>
+                <td>@item.DueDate?.ToShortDateString()</td>
+                <td>
+                    @if (item.ReturnedDate.HasValue)
+                    {
+                        <span class="text-success">Returned</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger">On Loan</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a>
+                    @if (!item.ReturnedDate.HasValue)
+                    {
+                        <a asp-action="Return" asp-route-id="@item.Id" class="btn btn-success btn-sm">Mark Returned</a>
+                    }
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -20,9 +20,24 @@ namespace Library.MVC.Controllers
         }
 
         // GET: Books
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, string availability)
         {
-            return View(await _context.Books.ToListAsync());
+            var books = _context.Books.AsQueryable();
+
+            // Search by Title or Author
+            if (!string.IsNullOrEmpty(searchString))
+                books = books.Where(b => b.Title.Contains(searchString) || b.Author.Contains(searchString));
+
+            // Filter by availability
+            if (!string.IsNullOrEmpty(availability))
+            {
+                if (availability == "Available")
+                    books = books.Where(b => b.IsAvailable);
+                else if (availability == "OnLoan")
+                    books = books.Where(b => !b.IsAvailable);
+            }
+
+            return View(await books.ToListAsync());
         }
 
         // GET: Books/Details/5

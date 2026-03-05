@@ -74,7 +74,7 @@ namespace Library.MVC.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
-                    Phone = table.Column<int>(type: "INTEGER", nullable: false)
+                    Phone = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -196,7 +196,8 @@ namespace Library.MVC.Migrations
                     BookId = table.Column<int>(type: "INTEGER", nullable: false),
                     MemberId = table.Column<int>(type: "INTEGER", nullable: false),
                     LoanDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DueDate = table.Column<DateTime>(type: "TEXT", nullable: true)
+                    DueDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    ReturnedDate = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {

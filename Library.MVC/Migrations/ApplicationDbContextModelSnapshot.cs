@@ -61,6 +61,9 @@ namespace Library.MVC.Migrations
                     b.Property<int>("MemberId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime?>("ReturnedDate")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BookId");
@@ -84,8 +87,9 @@ namespace Library.MVC.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Phone")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -296,7 +300,7 @@ namespace Library.MVC.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Library.Domain.Member", "User")
+                    b.HasOne("Library.Domain.Member", "Member")
                         .WithMany()
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -304,7 +308,7 @@ namespace Library.MVC.Migrations
 
                     b.Navigation("Book");
 
-                    b.Navigation("User");
+                    b.Navigation("Member");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
