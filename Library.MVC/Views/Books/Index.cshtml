@@ -8,7 +8,7 @@
                         @if (User.IsInRole("Admin"))
                         {
 <p>
-    <a asp-action="Create">Create New</a>
+        <a asp-action="Create" class="btn btn-success">Create New Book</a>
 </p>
                         }
 
@@ -26,15 +26,15 @@
         </div>
 
         <!-- Category Filter -->
-        @* <div class="col-md-3">
+        <div class="col-md-2">
             <select name="category" class="form-select">
                 <option value="">All Categories</option>
-                @foreach (var category in ViewBag.Categories)
-                {
-                    <option value="@category">@category</option>
-                }
+                <option value="Fiction">Fiction</option>
+                <option value="Non-Fiction">Non-Fiction</option>
+                <option value="Science">Science</option>
+                <option value="History">History</option>
             </select>
-        </div> *@
+        </div>
 
         <!-- Availability Filter -->
         <div class="col-md-2">
@@ -53,10 +53,10 @@
             </select>
         </div>
 
-        <!-- Buttons -->
+        
         <div class="col-md-1 d-grid">
             <button type="submit" class="btn btn-primary">
-                Go
+                Search
             </button>
         </div>
 
@@ -69,6 +69,7 @@
         <tr>
             <th>Title</th>
             <th>Author</th>
+            <th>Category</th>
             <th>ISBN</th>
             <th>Availability</th>
             <th></th>
@@ -80,14 +81,15 @@
     <tr>
         <td>@book.Title</td>
         <td>@book.Author</td>
+        <td>@book.Category</td>
         <td>@book.ISBN</td>
         <td>@(book.IsAvailable ? "Available" : "On Loan")</td>
     @if (User.IsInRole("Admin"))
     {
         <td>
-            <a asp-action="Edit" asp-route-id="@book.Id">Edit</a> |
-            <a asp-action="Details" asp-route-id="@book.Id">Details</a> |
-            <a asp-action="Delete" asp-route-id="@book.Id">Delete</a>
+                        <a asp-action="Edit" asp-route-id="@book.Id" class="btn btn-sm btn-warning">Edit</a>
+                        <a asp-action="Details" asp-route-id="@book.Id" class="btn btn-sm btn-info text-white">Details</a>
+                        <a asp-action="Delete" asp-route-id="@book.Id" class="btn btn-sm btn-danger">Delete</a>
         </td>
     }
     </tr>

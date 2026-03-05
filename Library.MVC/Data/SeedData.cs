@@ -52,6 +52,14 @@ namespace Library.MVC.Data
                 var bookFaker = new Faker<Book>()
                     .RuleFor(b => b.Title, f => f.Lorem.Sentence(3))
                     .RuleFor(b => b.Author, f => f.Name.FullName())
+                    .RuleFor(b => b.Category, f => f.PickRandom(new[]
+{
+    "Fiction",
+    "Science",
+    "Technology",
+    "History",
+    "Biography"
+}))
                     .RuleFor(b => b.IsAvailable, true)
                     .RuleFor(b => b.ISBN, f => f.Random.Replace("###-#-##-######-#"));
 

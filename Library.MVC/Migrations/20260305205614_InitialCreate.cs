@@ -58,6 +58,7 @@ namespace Library.MVC.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(type: "TEXT", nullable: false),
                     Author = table.Column<string>(type: "TEXT", nullable: false),
+                    Category = table.Column<string>(type: "TEXT", nullable: false),
                     ISBN = table.Column<string>(type: "TEXT", nullable: false),
                     IsAvailable = table.Column<bool>(type: "INTEGER", nullable: false)
                 },

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library.MVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260304151113_InitialCreate")]
+    [Migration("20260305205614_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,6 +27,10 @@ namespace Library.MVC.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Category")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
