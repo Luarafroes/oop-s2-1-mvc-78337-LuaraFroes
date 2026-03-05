@@ -5,17 +5,63 @@
 }
 
 <h1>Books</h1>
+                        @if (User.IsInRole("Admin"))
+                        {
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+                        }
 
-<form method="get">
-    <input type="text" name="searchString" placeholder="Search by Title or Author" value="@Context.Request.Query["searchString"]" />
-    
-    <select name="availability">
-        <option value="">All</option>
-        <option value="Available">Available</option>
-        <option value="OnLoan">On Loan</option>
-    </select>
+<form method="get" class="card card-body mb-4">
 
-    <button type="submit">Filter</button>
+    <div class="row g-3">
+
+        <!-- Search -->
+        <div class="col-md-4">
+            <input type="text"
+                   name="searchString"
+                   class="form-control"
+                   placeholder="Search by Title or Author..."
+                   value="@Context.Request.Query["searchString"]" />
+        </div>
+
+        <!-- Category Filter -->
+        @* <div class="col-md-3">
+            <select name="category" class="form-select">
+                <option value="">All Categories</option>
+                @foreach (var category in ViewBag.Categories)
+                {
+                    <option value="@category">@category</option>
+                }
+            </select>
+        </div> *@
+
+        <!-- Availability Filter -->
+        <div class="col-md-2">
+            <select name="availability" class="form-select">
+                <option value="">All</option>
+                <option value="Available">Available</option>
+                <option value="OnLoan">On Loan</option>
+            </select>
+        </div>
+
+        <!-- Sorting -->
+        <div class="col-md-2">
+            <select name="sortOrder" class="form-select">
+                <option value="">Sort</option>
+                <option value="title_asc">Title A–Z</option>
+            </select>
+        </div>
+
+        <!-- Buttons -->
+        <div class="col-md-1 d-grid">
+            <button type="submit" class="btn btn-primary">
+                Go
+            </button>
+        </div>
+
+    </div>
+
 </form>
 
 <table class="table">
@@ -36,11 +82,14 @@
         <td>@book.Author</td>
         <td>@book.ISBN</td>
         <td>@(book.IsAvailable ? "Available" : "On Loan")</td>
+    @if (User.IsInRole("Admin"))
+    {
         <td>
             <a asp-action="Edit" asp-route-id="@book.Id">Edit</a> |
             <a asp-action="Details" asp-route-id="@book.Id">Details</a> |
             <a asp-action="Delete" asp-route-id="@book.Id">Delete</a>
         </td>
+    }
     </tr>
 }
     </tbody>

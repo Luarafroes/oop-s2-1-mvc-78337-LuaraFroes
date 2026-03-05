@@ -56,3 +56,9 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login"; // default login page
+    options.AccessDeniedPath = "/Account/AccessDenied"; // new page for forbidden access
+});

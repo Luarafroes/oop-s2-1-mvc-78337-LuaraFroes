@@ -28,23 +28,26 @@
                 <td>@Html.DisplayFor(modelItem => item.DueDate)</td>
                 <td>@item.Book.Title</td>
                 <td>@item.Member.Name</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    @* Mark Returned button only for active loans *@
-                    @if (item.ReturnedDate == null)
-                    {
-                        <form asp-action="MarkReturned" method="post" style="display:inline;">
-                            <input type="hidden" name="id" value="@item.Id" />
-                            <button type="submit" class="btn btn-sm btn-success">Mark Returned</button>
-                        </form>
-                    }
-                    else
-                    {
-                        <span class="text-success">Returned</span>
-                    }
+    @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        @* Mark Returned button only for active loans *@
+                        @if (item.ReturnedDate == null)
+                        {
+                            <form asp-action="MarkReturned" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="@item.Id" />
+                                <button type="submit" class="btn btn-sm btn-success">Mark Returned</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <span class="text-success">Returned</span>
+                        }
                 </td>
+                }
             </tr>
         }
     </tbody>

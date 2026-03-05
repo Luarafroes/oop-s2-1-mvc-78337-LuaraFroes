@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Library.Domain;
+using Library.MVC.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Library.Domain;
-using Library.MVC.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Library.MVC.Controllers
 {
-    public class LoansController : Controller
+    
+    public class LoansController : Controller 
     {
         private readonly ApplicationDbContext _context;
 
@@ -20,11 +22,13 @@ namespace Library.MVC.Controllers
         }
 
         // GET: Loans
+        
         public async Task<IActionResult> Index()
         {
             var loans = _context.Loans
                 .Include(l => l.Book)
                 .Include(l => l.Member);
+
             return View(await loans.ToListAsync());
         }
 

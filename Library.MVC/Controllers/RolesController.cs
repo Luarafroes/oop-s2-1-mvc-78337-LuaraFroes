@@ -57,3 +57,14 @@ public class RolesController : Controller
         return RedirectToAction(nameof(Index));
     }
 }
+
+public class AccountController : Controller
+{
+    // GET: /Account/AccessDenied
+    [HttpGet]
+    public IActionResult AccessDenied()
+    {
+        ViewBag.Message = "You need admin privileges to access this page.";
+        return View();
+    }
+}

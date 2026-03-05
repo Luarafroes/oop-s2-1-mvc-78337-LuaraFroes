@@ -1,3 +1,5 @@
+using Library.Domain;
+
 namespace Library.Tests
 {
     public class UnitTest1
