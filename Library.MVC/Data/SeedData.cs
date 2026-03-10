@@ -42,7 +42,7 @@ namespace Library.MVC.Data
                     EmailConfirmed = true
                 };
 
-                await userManager.CreateAsync(adminUser, "Admin123!");
+                await userManager.CreateAsync(adminUser, "Letmein01*");
                 await userManager.AddToRoleAsync(adminUser, AppRoles.Admin);
             }
 
@@ -50,6 +50,7 @@ namespace Library.MVC.Data
             if (!context.Books.Any())
             {
                 var bookFaker = new Faker<Book>()
+                    .RuleFor(b => b.Id, f => 0) // Id will be set by the database
                     .RuleFor(b => b.Title, f => f.Lorem.Sentence(3))
                     .RuleFor(b => b.Author, f => f.Name.FullName())
                     .RuleFor(b => b.Category, f => f.PickRandom(new[]
@@ -71,6 +72,7 @@ namespace Library.MVC.Data
             if (!context.Member.Any())
             {
                 var memberFaker = new Faker<Member>()
+                    .RuleFor(m => m.Id, f => 0) // Id will be set by the database
                     .RuleFor(m => m.Name, f => f.Name.FullName())
                     .RuleFor(m => m.Email, f => f.Internet.Email())
                     .RuleFor(m => m.Phone, f => f.Phone.PhoneNumber("##########"));

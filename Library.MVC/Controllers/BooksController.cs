@@ -20,7 +20,7 @@ namespace Library.MVC.Controllers
         }
 
         // GET: Books
-        public async Task<IActionResult> Index(string searchString, string availability)
+        public async Task<IActionResult> Index(string searchString, string availability, string? category)
         {
             var books = _context.Books.AsQueryable();
 
@@ -35,6 +35,11 @@ namespace Library.MVC.Controllers
                     books = books.Where(b => b.IsAvailable);
                 else if (availability == "OnLoan")
                     books = books.Where(b => !b.IsAvailable);
+            }
+            //filter by category
+            if (!string.IsNullOrEmpty(category))
+            {
+                books = books.Where(b => b.Category == category);
             }
 
             return View(await books.ToListAsync());
@@ -65,8 +70,6 @@ namespace Library.MVC.Controllers
         }
 
         // POST: Books/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Author,ISBN,IsAvailable")] Book book)
@@ -96,9 +99,7 @@ namespace Library.MVC.Controllers
             return View(book);
         }
 
-        // POST: Books/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Books/Edit/
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Author,ISBN,IsAvailable")] Book book)
@@ -131,7 +132,7 @@ namespace Library.MVC.Controllers
             return View(book);
         }
 
-        // GET: Books/Delete/5
+        // GET: Books/Delete/
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -149,7 +150,7 @@ namespace Library.MVC.Controllers
             return View(book);
         }
 
-        // POST: Books/Delete/5
+        // POST: Books/Delete/
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

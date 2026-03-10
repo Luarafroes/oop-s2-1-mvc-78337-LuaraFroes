@@ -10,9 +10,11 @@
     <a asp-action="Create" class="btn btn-success">Create New Loan</a>
 </p>
 
+
 <table class="table">
     <thead>
         <tr>
+            <th>ID</th>
             <th>Book</th>
             <th>Member</th>
             <th>Loan Date</th>
@@ -24,17 +26,18 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.LoanDate)</td>
-                <td>@Html.DisplayFor(modelItem => item.DueDate)</td>
+                <td>@item.Id</td>
                 <td>@item.Book.Title</td>
                 <td>@item.Member.Name</td>
+                <td>@Html.DisplayFor(modelItem => item.LoanDate)</td>
+                <td>@Html.DisplayFor(modelItem => item.DueDate)</td>
+
     @if (User.IsInRole("Admin"))
                 {
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info text-white">Details</a>
                         <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
-                        @* Mark Returned button only for active loans *@
                         @if (item.ReturnedDate == null)
                         {
                             <form asp-action="MarkReturned" method="post" style="display:inline;">

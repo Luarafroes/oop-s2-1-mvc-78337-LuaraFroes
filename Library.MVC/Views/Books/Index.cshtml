@@ -67,6 +67,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>ID</th>
             <th>Title</th>
             <th>Author</th>
             <th>Category</th>
@@ -79,9 +80,10 @@
 @foreach (var book in Model)
 {
     <tr>
+                <td>@book.Id</td>
         <td>@book.Title</td>
         <td>@book.Author</td>
-        <td>@book.Category</td>
+        <td>@book.Category </td>
         <td>@book.ISBN</td>
         <td>@(book.IsAvailable ? "Available" : "On Loan")</td>
     @if (User.IsInRole("Admin"))
